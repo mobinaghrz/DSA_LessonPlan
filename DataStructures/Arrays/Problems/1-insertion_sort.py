@@ -22,7 +22,6 @@ def solution(array, size, level):
             swap(array, j, j - 1)
             j -= 1
             
-        
         counter += 1
         
         if counter == level:
