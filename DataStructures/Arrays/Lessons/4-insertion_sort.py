@@ -60,5 +60,6 @@ def insertion_sort(array):
         
         while j != 0 and array[j] < array[j-1]:
             swap(array, j, j - 1)
+            j -= 1
             
     return array
