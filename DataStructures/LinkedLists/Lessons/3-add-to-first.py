@@ -24,44 +24,44 @@ class LinkedList:
                 break
             itr = itr.next
             
-def addFirst(self, value):
-    """
-    Input:
-        - value: the data to be stored in the new node added
-                 at the beginning of the linked list
+    def add_first(self, value):
+        """
+        Input:
+            - value: the data to be stored in the new node added
+                    at the beginning of the linked list
 
-    Output:
-        - void (updates the linked list by inserting a new node at the head)
+        Output:
+            - void (updates the linked list by inserting a new node at the head)
 
-    Description:
-        The addFirst method inserts a new node containing the given value
-        at the beginning (head) of the linked list.
+        Description:
+            The addFirst method inserts a new node containing the given value
+            at the beginning (head) of the linked list.
 
-        Process:
-            - Create a new Node with the provided value.
-            - If the list is empty (head is None):
-                - Set both head and tail to the new node.
-            - Otherwise:
-                - Set newNode.next to point to the current head.
-                - Update head so that it becomes the new node.
-            - Increase the size of the list by 1.
+            Process:
+                - Create a new Node with the provided value.
+                - If the list is empty (head is None):
+                    - Set both head and tail to the new node.
+                - Otherwise:
+                    - Set newNode.next to point to the current head.
+                    - Update head so that it becomes the new node.
+                - Increase the size of the list by 1.
 
-        This method ensures constant-time insertion at the start of the list.
+            This method ensures constant-time insertion at the start of the list.
 
-    Time Complexity:
-        - O(1), insertion at the head requires no traversal
+        Time Complexity:
+            - O(1), insertion at the head requires no traversal
 
-    Space Complexity:
-        - O(1), only one additional node reference is created
-    """
-    newNode = Node(value)
+        Space Complexity:
+            - O(1), only one additional node reference is created
+        """
+        newNode = Node(value)
 
-    if self.head is None:
-        self.head = newNode
-        self.tail = newNode
-    else:
-        newNode.next = self.head
-        self.head = newNode
+        if self.head is None:
+            self.head = newNode
+            self.tail = newNode
+        else:
+            newNode.next = self.head
+            self.head = newNode
 
-    self.size += 1  
+        self.size += 1  
 
