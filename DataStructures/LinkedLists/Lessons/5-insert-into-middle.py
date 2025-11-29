@@ -103,12 +103,12 @@ class LinkedList:
             return
 
         counter = 0
-        prevNode = self.head
+        prev_node = self.head
         while counter + 1 != index:
-            prevNode = prevNode.next
+            prev_node = prev_node.next
             counter += 1
 
         newNode = Node(value)
-        newNode.next = prevNode.next
-        prevNode.next = newNode
+        newNode.next = prev_node.next
+        prev_node.next = newNode
         self.size += 1

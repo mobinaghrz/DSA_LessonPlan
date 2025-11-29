@@ -85,43 +85,6 @@ class LinkedList:
         self.size -= 1
 
     def remove_last(self):
-        """
-        Input:
-            - None (operates on the LinkedList instance)
-
-        Output:
-            - void (removes the last node from the linked list)
-
-        Description:
-            The remove_last method deletes the node at the end (tail) of
-            the linked list.
-
-            Process:
-                - If the list is empty (head is None):
-                    - Raise an exception because there is no node to remove.
-
-                - If the list contains only one node (head is tail):
-                    - Set both head and tail to None, making the list empty.
-
-                - If the list contains multiple nodes:
-                    - Start at the head and iterate until reaching the node
-                    immediately before the tail.
-                    - Disconnect the last node by setting the predecessor's
-                    next reference to None.
-                    - Update the tail pointer so it refers to the predecessor.
-
-                - Decrease the size of the list by 1.
-
-            This method requires traversal to find the node before the tail,
-            since a singly linked list does not support backward movement.
-
-        Time Complexity:
-            - O(n), because traversal from the head to the second-to-last
-            node is required
-
-        Space Complexity:
-            - O(1), uses only a single iteration pointer
-        """
         if self.head is None:
             raise Exception("linked list is empty")
         elif self.head is self.tail:
@@ -135,4 +98,27 @@ class LinkedList:
             itr.next = None
             self.tail = itr
 
+        self.size -= 1
+        
+    def remove(self, index):
+        if index < 0 or index >= self.size:
+            raise Exception("index out of range")
+        
+        if index == 0:
+            self.remove_first()
+            return
+        
+        if index == self.size - 1:
+            self.remove_last()
+            return
+        
+        counter = 0
+        itr = self.head
+        while counter + 1 != index:
+            itr = itr.next
+            counter += 1
+            
+        target_node = itr.next
+        itr.next = target_node.next
+        target_node.next = None
         self.size -= 1
