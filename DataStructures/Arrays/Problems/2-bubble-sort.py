@@ -7,9 +7,7 @@ def array_to_sequence(array):
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
     
-def solution(array, level):
-    size = len(array)
-    
+def solution(array, size, level):    
     if size in [0, 1]:
         print(array_to_sequence(array))
         return
