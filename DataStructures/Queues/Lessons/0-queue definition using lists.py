@@ -34,16 +34,4 @@ class Queue:
         self.array = [0] * size
         self.front = -1
         self.back = -1
-        
-    def Enqueu(self, value):
-        if self.back == len(self.array) - 1:
-            raise Exception("Queue is full")
-
-        if self.front is None:
-            self.array[0] = value
-            self.front = 0
-            self.back = 0
-        else:
-            self.back += 1
-            self.array[self.back] = value
-                
+                        

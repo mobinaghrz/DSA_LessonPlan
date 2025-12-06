@@ -4,7 +4,7 @@ class Queue:
         self.front = -1
         self.back = -1
         
-    def Enqueu(self, value):
+    def enqueue(self, value):
         """
         Input:
             - value: The element to be inserted at the back of the queue.
