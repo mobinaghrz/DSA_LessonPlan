@@ -1,0 +1,1 @@
+hash = lambda x: ord(x[0])
