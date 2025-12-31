@@ -74,7 +74,7 @@ class LinkedList:
 class HashMap:
     def __init__(self, size):
         self.size = size 
-        self.map = [LinkedList() for _ in range(size)]
+        self.map = [None] * size
 
     def hash(self, key):
         hash_code = 0
@@ -99,28 +99,36 @@ class HashMap:
 
             The insertion process works as follows:
                 - Compute the bucket index using the hash function
-                - Search the linked list stored at that bucket for the key
-                - If the key is found, update the existing node’s value
+                - Retrieve the bucket (linked list) stored at the computed index
+                - If the bucket is empty (None), create a new linked list, insert the
+                (key, value) pair, and store the list back into the bucket array
+                - If the bucket exists, search the linked list for the provided key
+                - If the key is found, update the stored (key, value) tuple in that node
                 - If the key is not found, append a new node containing (key, value)
                 to the end of the linked list (separate chaining)
 
-            This implementation supports hash collisions via separate chaining,
-            meaning multiple keys that hash to the same index are stored in the
-            bucket’s linked list.
+            This implementation handles hash collisions via separate chaining, so
+            multiple keys that hash to the same index can be stored in the same bucket.
 
         Time Complexity:
-            - Average case: O(1) expected (assuming a good hash distribution)
-            - Worst case:  O(n) where n is the number of entries in a bucket
-                        (all keys collide into the same bucket)
+            - Average case: O(1) expected (assuming uniform hashing)
+            - Worst case:  O(n) where n is the number of entries in a single bucket
 
         Space Complexity:
-            - O(1), constant extra space is used per operation (excluding the
-            space required to store the new node when inserting a new key)
+            - O(1), constant extra space is used per operation (excluding storage for
+            a newly inserted node and an optionally created bucket list)
         """
         idx = self.hash(key)
-        node = self.map[idx].search(key)
-        
-        if node is not None:
-            node.data = (key, value)
+        bucket = self.map[idx]
+
+        if bucket is None:
+            bucket = LinkedList()
+            bucket.add_last(key, value)
+            self.map[idx] = bucket
         else:
-            self.map[idx].add_last(key, value)
+            node = bucket.search(key)
+
+            if node is not None:
+                node.data = (key, value)
+            else:
+                bucket.add_last(key, value)

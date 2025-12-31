@@ -76,7 +76,7 @@ class LinkedList:
 class HashMap:
     def __init__(self, size):
         self.size = size 
-        self.map = [LinkedList() for _ in range(size)]
+        self.map = [None] * size
 
     def hash(self, key):
         hash_code = 0
