@@ -4,7 +4,7 @@ class Node:
         self.next = None
         
 
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self, node=None):
         self.head = node 
         self.tail = node 
@@ -16,7 +16,7 @@ class LinkedList:
             if itr.data[0] == key:
                 return itr
             itr = itr.next
-
+        
             
     def add_first(self, key, value):
         newNode = Node(key, value)
@@ -26,6 +26,7 @@ class LinkedList:
             self.tail = newNode
         else:
             newNode.next = self.head
+            self.head.prev = newNode
             self.head = newNode
 
         self.size += 1 
@@ -38,6 +39,7 @@ class LinkedList:
             self.tail = newNode
         else:
             self.tail.next = newNode
+            newNode.prev = self.tail
             self.tail = newNode
 
         self.size += 1
@@ -51,7 +53,9 @@ class LinkedList:
         else:
             target = self.head
             self.head = self.head.next
+            
             target.next = None
+            self.head.prev = None
 
         self.size -= 1
 
@@ -62,15 +66,13 @@ class LinkedList:
             self.head = None
             self.tail = None
         else:
-            itr = self.head
-            while itr.next is not self.tail:
-                itr = itr.next
+            target = self.tail
+            self.tail = target.prev
 
-            itr.next = None
-            self.tail = itr
-
+            target.prev = None
+            self.tail.next = None
         self.size -= 1
-        
+      
 class HashMap:
     def __init__(self, size):
         self.size = size 
@@ -122,7 +124,7 @@ class HashMap:
         bucket = self.map[idx]
 
         if bucket is None:
-            bucket = LinkedList()
+            bucket = DoublyLinkedList()
             bucket.add_last(key, value)
             self.map[idx] = bucket
         else:

@@ -15,10 +15,8 @@ class DoublyLinkedList:
         itr = self.head
         while itr is not None:
             if itr.data[0] == key:
-                return itr.data[1]
-            itr = itr.next
-        else:
-            print("key not found")
+                return itr
+            
             
     def add_first(self, key, value):
         newNode = Node(key, value)
@@ -55,7 +53,7 @@ class DoublyLinkedList:
         else:
             target = self.head
             self.head = self.head.next
-            
+
             target.next = None
             self.head.prev = None
 

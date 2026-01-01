@@ -2,9 +2,10 @@ class Node:
     def __init__(self, key, value):
         self.data = (key, value)
         self.next = None
+        self.prev = None
         
 
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self, node=None):
         self.head = node 
         self.tail = node 
@@ -16,7 +17,6 @@ class LinkedList:
             if itr.data[0] == key:
                 return itr
             itr = itr.next
-
             
     def add_first(self, key, value):
         newNode = Node(key, value)
@@ -26,6 +26,7 @@ class LinkedList:
             self.tail = newNode
         else:
             newNode.next = self.head
+            self.head.prev = newNode
             self.head = newNode
 
         self.size += 1 
@@ -38,6 +39,7 @@ class LinkedList:
             self.tail = newNode
         else:
             self.tail.next = newNode
+            newNode.prev = self.tail
             self.tail = newNode
 
         self.size += 1
@@ -51,7 +53,9 @@ class LinkedList:
         else:
             target = self.head
             self.head = self.head.next
+            
             target.next = None
+            self.head.prev = None
 
         self.size -= 1
 
@@ -62,13 +66,11 @@ class LinkedList:
             self.head = None
             self.tail = None
         else:
-            itr = self.head
-            while itr.next is not self.tail:
-                itr = itr.next
+            target = self.tail
+            self.tail = target.prev
 
-            itr.next = None
-            self.tail = itr
-
+            target.prev = None
+            self.tail.next = None
         self.size -= 1
         
 class HashMap:
@@ -89,7 +91,7 @@ class HashMap:
         bucket = self.map[idx]
 
         if bucket is None:
-            bucket = LinkedList()
+            bucket = DoublyLinkedList()
             bucket.add_last(key, value)
             self.map[idx] = bucket
         else:
@@ -114,6 +116,74 @@ class HashMap:
         
         return node.data[1]
     
+    def delete(self, key):
+        """
+        Input:
+            - key: a string key identifying the entry to be deleted
 
-        #TODO: use doubly linked list instead of singular linked list before implementing delete method
-        
+        Output:
+            - None
+
+        Description:
+            This method removes the key-value pair associated with the provided key
+            from the hash map.
+
+            The deletion process works as follows:
+                - Compute the bucket index using the hash function
+                - Retrieve the bucket (linked list) stored at the computed index
+                - If the bucket is empty (None) or contains no nodes, raise an exception
+                indicating the key is not found
+                - Traverse the linked list to locate the node whose stored key matches
+                the provided key
+                - If the matching node is the head of the list, remove it using remove_first()
+                - If the matching node is the tail of the list, remove it using remove_last()
+                - If the matching node is in the middle, unlink it by reconnecting its
+                previous and next neighbors and decrement the bucket size
+                - If the deletion causes the bucket to become empty, set the bucket slot
+                in the underlying array to None to fully remove the bucket
+
+            This implementation handles hash collisions via separate chaining, so deletion
+            only affects the linked list stored at the computed bucket index.
+
+        Time Complexity:
+            - Average case: O(1) expected (assuming uniform hashing)
+            - Worst case:  O(n) where n is the number of entries in a single bucket
+
+        Space Complexity:
+            - O(1), constant extra space is used per operation
+        """
+
+        idx = self.hash(key)
+        bucket = self.map[idx]
+
+        if bucket is None or bucket.head is None:
+            raise Exception("key not found")
+
+        itr = bucket.head
+
+        if itr.data[0] == key:
+            bucket.remove_first()
+            if bucket.size == 0:
+                self.map[idx] = None
+            return
+
+        while itr is not None and itr.data[0] != key:
+            itr = itr.next
+
+        if itr is None:
+            raise Exception("key not found")
+
+        if itr.next is None:
+            bucket.remove_last()
+            if bucket.size == 0:
+                self.map[idx] = None
+            return
+
+        itr.prev.next = itr.next
+        itr.next.prev = itr.prev
+        itr.next = None
+        itr.prev = None
+        bucket.size -= 1
+
+        if bucket.size == 0:
+            self.map[idx] = None
