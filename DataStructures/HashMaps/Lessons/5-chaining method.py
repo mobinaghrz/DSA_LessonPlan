@@ -2,9 +2,10 @@ class Node:
     def __init__(self, key, value):
         self.data = (key, value)
         self.next = None
+        self.prev = None
         
 
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self, node=None):
         self.head = node 
         self.tail = node 
@@ -15,7 +16,6 @@ class LinkedList:
         while itr is not None:
             if itr.data[0] == key:
                 return itr.data[1]
-                break
             itr = itr.next
         else:
             print("key not found")
@@ -28,6 +28,7 @@ class LinkedList:
             self.tail = newNode
         else:
             newNode.next = self.head
+            self.head.prev = newNode
             self.head = newNode
 
         self.size += 1 
@@ -40,6 +41,7 @@ class LinkedList:
             self.tail = newNode
         else:
             self.tail.next = newNode
+            newNode.prev = self.tail
             self.tail = newNode
 
         self.size += 1
@@ -53,7 +55,9 @@ class LinkedList:
         else:
             target = self.head
             self.head = self.head.next
+            
             target.next = None
+            self.head.prev = None
 
         self.size -= 1
 
@@ -64,13 +68,11 @@ class LinkedList:
             self.head = None
             self.tail = None
         else:
-            itr = self.head
-            while itr.next is not self.tail:
-                itr = itr.next
+            target = self.tail
+            self.tail = target.prev
 
-            itr.next = None
-            self.tail = itr
-
+            target.prev = None
+            self.tail.next = None
         self.size -= 1
         
 class HashMap:

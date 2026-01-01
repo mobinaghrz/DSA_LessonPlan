@@ -101,38 +101,6 @@ class HashMap:
                 bucket.add_last(key, value)
 
     def get(self, key):
-        """
-        Input:
-            - key: a string key identifying the entry to be searched for
-
-        Output:
-            - value or None:
-                - Returns the value associated with the key if it exists
-                - Returns None if the key does not exist in the hash map
-
-        Description:
-            This method searches for a key in the hash map and returns the value
-            associated with that key.
-
-            The search process works as follows:
-                - Compute the bucket index using the hash function
-                - Retrieve the bucket (linked list) at the computed index
-                - If the bucket is empty (None), the key does not exist
-                - Otherwise, traverse the linked list and compare stored keys
-                - If a matching key is found, return its associated value
-                - If the key is not found after traversal, return None
-
-            This implementation handles hash collisions using separate chaining,
-            meaning multiple keys that hash to the same index are stored in the
-            same bucket list and searched sequentially.
-
-        Time Complexity:
-            - Average case: O(1) expected (assuming uniform hashing)
-            - Worst case:  O(n) where n is the number of entries in a single bucket
-
-        Space Complexity:
-            - O(1), constant extra space is used
-        """
         idx = self.hash(key)
         bucket = self.map[idx]
         
@@ -145,3 +113,7 @@ class HashMap:
             return 
         
         return node.data[1]
+    
+
+        #TODO: use doubly linked list instead of singular linked list before implementing delete method
+        
