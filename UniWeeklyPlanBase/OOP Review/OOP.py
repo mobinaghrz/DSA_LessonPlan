@@ -75,3 +75,14 @@ class Circle:
     # Calculate and return the perimeter (circumference) of the circle using the formula: 2π * r
     def calculate_circle_perimeter(self):
         return 2 * math.pi * self.radius
+
+
+
+
+
+
+
+
+
+
+

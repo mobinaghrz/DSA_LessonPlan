@@ -25,3 +25,20 @@ arr = [1.4, 2.0, 24.0, 5.0, 0.0]  # All float values
 # // This array will store float type element
 # float arr[20];  
 # ----------------------------------------------------------
+
+# Types of Arrays on the basis of Size
+# 1. Fixed Sized Arrays
+
+# Create a fixed-size list of length 5, 
+# initialized with zeros
+arrF = [0] * 5
+
+# Output the fixed-size list
+print(arrF)
+
+# 2. Dynamic Sized Arrays
+# Dynamic Array
+arrD = []
+arrD.append(2)
+arrD.append(3)
+print(arrD)
